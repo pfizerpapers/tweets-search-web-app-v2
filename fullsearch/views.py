@@ -13,7 +13,7 @@ def index(request):
             date1 = form.cleaned_data['Date1']
             date2 = form.cleaned_data['Date2']            
             
-            if getDaysBetweenDates(date1, date2) <= 3:                
+            if getDaysBetweenDates(date1, date2) <= 31:                
                 fromDate, toDate = formatDates(date1,date2)                        
                 df_output = getTweetsFullArchive(query,lang, fromDate, toDate)
                 
