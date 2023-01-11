@@ -53,6 +53,9 @@ def getTweetsFullArchive(query,lang,fromDate, toDate):
     # use the full archive endpoint from twitter api;
     # fromDate and toDate format: '202208250000'
     
+    # max number of requests is 10
+    requests_count = 0     
+    
     # token from autorization
     bearer_token = "AAAAAAAAAAAAAAAAAAAAAA5chgEAAAAA73XpwdJWFyAei9XfNvs%2Fk1vTOws%3DNdKfgnK84FLwadYmIbbGRdr1JeW1aOtJSbCEUi9Rly85VqeM1w"
     header = {"Authorization": 'bearer ' + bearer_token}
@@ -64,6 +67,9 @@ def getTweetsFullArchive(query,lang,fromDate, toDate):
     params = {'query': query, 'maxResults': '500',
               'fromDate': fromDate, 'toDate': toDate}
     url = 'https://api.twitter.com/1.1/tweets/search/fullarchive/full.json'
+    
+    requests_count = requests_count + 1
+    
     response = requests.get(url, headers=header, params=params)
     
     print(response.request.url)
@@ -86,7 +92,9 @@ def getTweetsFullArchive(query,lang,fromDate, toDate):
         print('no more pages')
 
     # loop to get response for the endpoint whith next parameter
-    while (next_token != ' '):
+    while next_token != ' ' and requests_count <=3 :
+        requests_count = requests_count + 1
+        
         params = {'query': query, 'maxResults': '500',
                   'fromDate': fromDate, 'toDate': toDate, 'next': next_token}
         url = 'https://api.twitter.com/1.1/tweets/search/fullarchive/full.json'
