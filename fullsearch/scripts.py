@@ -94,7 +94,7 @@ def getTweetsFullArchive(query,lang,fromDate, toDate):
     # loop to get response for the endpoint whith next parameter
     while next_token != ' ':
         requests_count = requests_count + 1
-        if requests_count == 2:
+        if requests_count == 10:
             break
         
         params = {'query': query, 'maxResults': '500',
