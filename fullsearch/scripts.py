@@ -92,8 +92,10 @@ def getTweetsFullArchive(query,lang,fromDate, toDate):
         print('no more pages')
 
     # loop to get response for the endpoint whith next parameter
-    while next_token != ' ' and requests_count <=3 :
+    while next_token != ' ':
         requests_count = requests_count + 1
+        if requests_count == 2:
+            break
         
         params = {'query': query, 'maxResults': '500',
                   'fromDate': fromDate, 'toDate': toDate, 'next': next_token}
